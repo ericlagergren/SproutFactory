@@ -67,9 +67,9 @@ public class DBUtils {
                     + " name      CHAR(20) " + NOT_NULL + NEWLINE
                     + " imagePath CHAR(60) " + NOT_NULL + RPAREN
         );
-        exec(ds, "ALTER TABLE products "
-                    + "ADD CONSTRAINT FK_SUPPLIERS FOREIGN KEY (supplier_id) "
-                    + "REFERENCES suppliers(id)"
+        exec(ds, "ALTER TABLE " + PRODUCTS
+                    + " ADD CONSTRAINT FK_SUPPLIERS FOREIGN KEY (supplier_id) "
+                    + "REFERENCES " + SUPPLIERS + "(id)"
         );
     }
 

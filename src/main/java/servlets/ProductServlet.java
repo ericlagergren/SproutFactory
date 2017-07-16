@@ -78,7 +78,7 @@ public class ProductServlet extends HttpServlet {
         ) {
             stmt.setString(1, p.name);
             stmt.setBigDecimal(2, p.price);
-            stmt.setBoolean(3, p.isNew);
+            stmt.setString(3, Bool.format(p.isNew));
             stmt.execute();
 
             products.add(p);
