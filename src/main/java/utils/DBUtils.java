@@ -19,12 +19,12 @@ public class DBUtils {
 
     public static void buildDatabase() throws SQLException, ClassNotFoundException { buildDatabase(dataSource()); }
     public static void buildDatabase(DataSource ds) throws SQLException, ClassNotFoundException {
-        exec(ds, "CREATE TABLE table_customers ( "
-                    + "customerID INT NOT NULL PRIMARY KEY, "
-                    + "firstName CHAR(20) NOT NULL, "
-                    + "lastName CHAR(20) NOT NULL, "
+        exec(ds, "CREATE TABLE customers ( "
+                    + "id INT NOT NULL PRIMARY KEY, "
+                    + "first CHAR(20) NOT NULL, "
+                    + "last CHAR(20) NOT NULL, "
                     + "email CHAR(20) NOT NULL, "
-                    + "birthDate CHAR(80) )"
+                    + "dob CHAR(80) )"
         );
         exec(ds, "CREATE TABLE table_Suppliers ( "
                     + "firstName CHAR(20) NOT NULL, "
