@@ -36,40 +36,40 @@ public class DBUtils {
     public static void buildDatabase() throws SQLException, ClassNotFoundException { buildDatabase(dataSource()); }
     public static void buildDatabase(DataSource ds) throws SQLException, ClassNotFoundException {
         exec(ds, CREATE_TABLE + CUSTOMERS + LPAREN
-                    + "id " + UUID_TYPE  + PRIM_KEY + NEWLINE
-                    + "first CHAR(20)  " + NOT_NULL + NEWLINE
-                    + "last  CHAR(20)  " + NOT_NULL + NEWLINE
-                    + "email CHAR(20)  " + NOT_NULL + NEWLINE
-                    + "dob   TIMESTAMP " + RPAREN
+                    + "id "     + UUID_TYPE  + PRIM_KEY + NEWLINE
+                    + "first_name CHAR(20)  " + NOT_NULL + NEWLINE
+                    + "last_name  CHAR(20)  " + NOT_NULL + NEWLINE
+                    + "email      CHAR(20)  " + NOT_NULL + NEWLINE
+                    + "dob        TIMESTAMP " + RPAREN
         );
         exec(ds, CREATE_TABLE + SUPPLIERS + LPAREN
-                    + "firstName      CHAR(20) " + NOT_NULL + NEWLINE
-                    + "lastName       CHAR(20) " + NOT_NULL + NEWLINE
-                    + "suppliersID " + UUID_TYPE + PRIM_KEY + NEWLINE
-                    + "SuppliersEmail CHAR(20) " + NOT_NULL + RPAREN
+                    + "first_name CHAR(20) " + NOT_NULL + NEWLINE
+                    + "last_name  CHAR(20) " + NOT_NULL + NEWLINE
+                    + "id "     + UUID_TYPE  + PRIM_KEY + NEWLINE
+                    + "email      CHAR(20) " + NOT_NULL + RPAREN
         );
         exec(ds, CREATE_TABLE + PRODUCTS + LPAREN
-                    + "id " + UUID_TYPE       + PRIM_KEY + NEWLINE
-                    + "name  CHAR(20)       " + NOT_NULL + NEWLINE
-                    + "price DECIMAL(7, 2)  " + NOT_NULL + NEWLINE
-                    + "isNew CHAR(3)        " + NOT_NULL + NEWLINE
-                    + "suppliersID  RAW(16) " + NOT_NULL + RPAREN
+                    + "id "      + UUID_TYPE        + PRIM_KEY + NEWLINE
+                    + "name        CHAR(20)       " + NOT_NULL + NEWLINE
+                    + "price       DECIMAL(7, 2)  " + NOT_NULL + NEWLINE
+                    + "is_new      CHAR(3)        " + NOT_NULL + NEWLINE
+                    + "supplier_id RAW(16)        " + NOT_NULL + RPAREN
         );
         exec(ds, CREATE_TABLE + EMPLOYEES + LPAREN
-                    + "firstName      CHAR(20)      " + NOT_NULL + NEWLINE
-                    + "lastName       CHAR(20)      " + NOT_NULL + NEWLINE
-                    + "wage           DECIMAL(7, 2) " + NOT_NULL + NEWLINE
-                    + "employeesID " + UUID_TYPE      + PRIM_KEY + NEWLINE
-                    + "isNew          CHAR(1)       " + NOT_NULL + NEWLINE
-                    + "employeesEmail CHAR(20)      " + NOT_NULL + RPAREN
+                    + "first_name CHAR(20)      " + NOT_NULL + NEWLINE
+                    + "last_name  CHAR(20)      " + NOT_NULL + NEWLINE
+                    + "wage       DECIMAL(7, 2) " + NOT_NULL + NEWLINE
+                    + "id "     + UUID_TYPE       + PRIM_KEY + NEWLINE
+                    + "is_new     CHAR(1)       " + NOT_NULL + NEWLINE
+                    + "email      CHAR(20)      " + NOT_NULL + RPAREN
         );
         exec(ds, CREATE_TABLE + RECIPES + LPAREN
-                    + " recipesName CHAR(20) " + NOT_NULL + NEWLINE
-                    + " imagePath   CHAR(60) " + NOT_NULL + RPAREN
+                    + " name      CHAR(20) " + NOT_NULL + NEWLINE
+                    + " imagePath CHAR(60) " + NOT_NULL + RPAREN
         );
-        exec(ds, "ALTER TABLE table_product "
-                    + "ADD CONSTRAINT FK_SUPPLIERS FOREIGN KEY (suppliersID) "
-                    + "REFERENCES table_Suppliers(suppliersID)"
+        exec(ds, "ALTER TABLE products "
+                    + "ADD CONSTRAINT FK_SUPPLIERS FOREIGN KEY (supplier_id) "
+                    + "REFERENCES suppliers(id)"
         );
     }
 

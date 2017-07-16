@@ -71,7 +71,7 @@ public class ProductServlet extends HttpServlet {
                 PreparedStatement stmt = conn.prepareStatement("" +
                         "INSERT INTO " + DBUtils.PRODUCTS + " VALUES (DEFAULT, ?, ?, ?)"
                 )
-        ){
+        ) {
             stmt.setString(1, p.name);
             stmt.setBigDecimal(2, p.price);
             stmt.setBoolean(3, p.isNew);

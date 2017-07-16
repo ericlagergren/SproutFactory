@@ -1,52 +1,22 @@
 package models;
 
+import utils.UUID;
+
 public class Supplier {
-    private String suppliersID;
-    private String firstName;
-    private String lastName;
-    private String suppliersEmail;
+    public UUID id;
+    public String firstName;
+    public String lastName;
+    public String email;
 
-
-    public Supplier() {
+    public Supplier(String firstName, String lastName, String email) {
+        this(null, firstName, lastName, email);
     }
 
-    public Supplier(String suppliersID, String firstName, String lastName, String suppliersEmail) {
-        this.suppliersID = suppliersID;
+    public Supplier(UUID id, String firstName, String lastName, String email) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.suppliersEmail = suppliersEmail;
-    }
-
-    public String getSuppliersID() {
-        return suppliersID;
-    }
-
-    public void setSuppliersID(String suppliersID) {
-        this.suppliersID = suppliersID;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getSuppliersEmail() {
-        return suppliersEmail;
-    }
-
-    public void setSuppliersEmail(String suppliersEmail) {
-        this.suppliersEmail = suppliersEmail;
+        this.email = email;
     }
 
     @Override
@@ -56,28 +26,28 @@ public class Supplier {
 
         Supplier supplier = (Supplier) o;
 
-        if (suppliersID != null ? !suppliersID.equals(supplier.suppliersID) : supplier.suppliersID != null) return false;
+        if (id != null ? !id.equals(supplier.id) : supplier.id != null) return false;
         if (firstName != null ? !firstName.equals(supplier.firstName) : supplier.firstName != null) return false;
         if (lastName != null ? !lastName.equals(supplier.lastName) : supplier.lastName != null) return false;
-        return (suppliersEmail != null ? suppliersEmail.equals(supplier.suppliersEmail) : supplier.suppliersEmail == null);
+        return email != null ? email.equals(supplier.email) : supplier.email == null;
     }
 
     @Override
     public int hashCode() {
-        int result = suppliersID != null ? suppliersID.hashCode() : 0;
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
-        result = 31 * result + (suppliersEmail != null ? suppliersEmail.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
         return "Supplier{" +
-                "suppliersID='" + suppliersID + '\'' +
+                "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", suppliersEmail='" + suppliersEmail + '\'' +
+                ", email='" + email + '\'' +
                 '}';
     }
 }
