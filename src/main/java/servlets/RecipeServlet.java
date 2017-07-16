@@ -1,6 +1,8 @@
 package servlets;
 
 import models.Recipe;
+import utils.DBUtils;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,10 +10,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.sql.*;
-import utils.DBUtils;
 
 @WebServlet(name = "RecipeRegistration", urlPatterns = { "/RecipeRegistration", "/recipeRegistration", "/reciperegistration" })
 public class RecipeServlet extends HttpServlet {

@@ -1,5 +1,10 @@
 package servlets;
 
+import models.Product;
+import utils.Bool;
+import utils.DBUtils;
+import utils.UUID;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,13 +13,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import models.Product;
-import utils.Bool;
-import utils.DBUtils;
-import utils.UUID;
 
 @WebServlet(name = "ProductRegistration", urlPatterns = { "/ProductRegistration", "/productRegistration", "/productregistration" })
 public class ProductServlet extends HttpServlet {
