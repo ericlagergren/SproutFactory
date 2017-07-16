@@ -49,18 +49,18 @@ public class DBUtils {
                     + "SuppliersEmail CHAR(20) " + NOT_NULL + RPAREN
         );
         exec(ds, CREATE_TABLE + PRODUCTS + LPAREN
-                    + "id " + UUID_TYPE      + PRIM_KEY + NEWLINE
-                    + "name  CHAR(20)      " + NOT_NULL + NEWLINE
-                    + "price DECIMAL(7, 2) " + NOT_NULL + NEWLINE
-                    + "isNew CHAR(3)       " + NOT_NULL + NEWLINE
-                    + "suppliersID  RAW(16)       " + NOT_NULL + RPAREN
+                    + "id " + UUID_TYPE       + PRIM_KEY + NEWLINE
+                    + "name  CHAR(20)       " + NOT_NULL + NEWLINE
+                    + "price DECIMAL(7, 2)  " + NOT_NULL + NEWLINE
+                    + "isNew CHAR(3)        " + NOT_NULL + NEWLINE
+                    + "suppliersID  RAW(16) " + NOT_NULL + RPAREN
         );
         exec(ds, CREATE_TABLE + EMPLOYEES + LPAREN
                     + "firstName      CHAR(20)      " + NOT_NULL + NEWLINE
                     + "lastName       CHAR(20)      " + NOT_NULL + NEWLINE
                     + "wage           DECIMAL(7, 2) " + NOT_NULL + NEWLINE
                     + "employeesID " + UUID_TYPE      + PRIM_KEY + NEWLINE
-                    + "isNew   CHAR(1)       " + NOT_NULL + NEWLINE
+                    + "isNew          CHAR(1)       " + NOT_NULL + NEWLINE
                     + "employeesEmail CHAR(20)      " + NOT_NULL + RPAREN
         );
         exec(ds, CREATE_TABLE + RECIPES + LPAREN
