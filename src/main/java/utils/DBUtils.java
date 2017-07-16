@@ -17,39 +17,52 @@ public class DBUtils {
         return ods;
     }
 
+    public static final String CUSTOMERS = "customers";
+    public static final String SUPPLIERS = "suppliers";
+    public static final String PRODUCTS = "products";
+    public static final String EMPLOYEES = "employees";
+    public static final String RECIPES = "recipes";
+
+    private static final String CREATE_TABLE = "CREATE TABLE ";
+    private static final String PRIM_KEY = "PRIMARY KEY";
+    private static final String NOT_NULL = "NOT NULL";
+    private static final String NEWLINE = ",\n";
+    private static final String RPAREN = "\n)";
+    private static final String LPAREN = "(\n";
+
     public static void buildDatabase() throws SQLException, ClassNotFoundException { buildDatabase(dataSource()); }
     public static void buildDatabase(DataSource ds) throws SQLException, ClassNotFoundException {
-        exec(ds, "CREATE TABLE customers ( "
-                    + "id INT NOT NULL PRIMARY KEY, "
-                    + "first CHAR(20) NOT NULL, "
-                    + "last CHAR(20) NOT NULL, "
-                    + "email CHAR(20) NOT NULL, "
-                    + "dob CHAR(80) )"
+        exec(ds, CREATE_TABLE + CUSTOMERS + LPAREN
+                    + "id    INT "      + PRIM_KEY + NEWLINE
+                    + "first CHAR(20) " + NOT_NULL + NEWLINE
+                    + "last  CHAR(20) " + NOT_NULL + NEWLINE
+                    + "email CHAR(20) " + NOT_NULL + NEWLINE
+                    + "dob   CHAR(80) " + RPAREN
         );
-        exec(ds, "CREATE TABLE table_Suppliers ( "
-                    + "firstName CHAR(20) NOT NULL, "
-                    + "lastName CHAR(20) NOT NULL, "
-                    + "suppliersID INT NOT NULL PRIMARY KEY, "
-                    + "SuppliersEmail CHAR(20) NOT NULL )"
+        exec(ds, CREATE_TABLE + SUPPLIERS + LPAREN
+                    + "firstName      CHAR(20) " + NOT_NULL + NEWLINE
+                    + "lastName       CHAR(20) " + NOT_NULL + NEWLINE
+                    + "suppliersID    INT      " + PRIM_KEY + NEWLINE
+                    + "SuppliersEmail CHAR(20) " + NOT_NULL + RPAREN
         );
-        exec(ds, "CREATE TABLE table_product ( "
-                    + "productName CHAR(20) NOT NULL, "
-                    + "productPrice decimal(7,2) NOT NULL, "
-                    + "productID INT NOT NULL PRIMARY KEY, "
-                    + "productIsNew CHAR(3) NOT NULL, "
-                    + "suppliersID INT NOT NULL )"
+        exec(ds, CREATE_TABLE + PRODUCTS + LPAREN
+                    + "productName  CHAR(20)      " + NOT_NULL + NEWLINE
+                    + "productPrice DECIMAL(7, 2) " + NOT_NULL + NEWLINE
+                    + "productID    INT           " + PRIM_KEY + NEWLINE
+                    + "productIsNew CHAR(3)       " + NOT_NULL + NEWLINE
+                    + "suppliersID  INT           " + NOT_NULL + RPAREN
         );
-        exec(ds,"CREATE TABLE table_employees ( "
-                    + "firstName CHAR(20) NOT NULL, "
-                    + "lastName CHAR(20) NOT NULL, "
-                    + "wage decimal(7,2) NOT NULL, "
-                    + "employeesID INT NOT NULL PRIMARY KEY, "
-                    + "productIsNew CHAR(3) NOT NULL, "
-                    + "employeesEmail CHAR(20) NOT NULL )"
+        exec(ds,CREATE_TABLE + EMPLOYEES + LPAREN
+                    + "firstName      CHAR(20)      " + NOT_NULL + NEWLINE
+                    + "lastName       CHAR(20)      " + NOT_NULL + NEWLINE
+                    + "wage           DECIMAL(7, 2) " + NOT_NULL + NEWLINE
+                    + "employeesID    INT           " + PRIM_KEY + NEWLINE
+                    + "productIsNew   CHAR(3)       " + NOT_NULL + NEWLINE
+                    + "employeesEmail CHAR(20)      " + NOT_NULL + RPAREN
         );
-        exec(ds, "CREATE TABLE table_recipes ( "
-                    + " recipesName CHAR(20) NOT NULL, "
-                    + " imagePath CHAR(60) NOT NULL )"
+        exec(ds, CREATE_TABLE + RECIPES + LPAREN
+                    + " recipesName CHAR(20) " + NOT_NULL + NEWLINE
+                    + " imagePath   CHAR(60) " + NOT_NULL + RPAREN
         );
         exec(ds, "ALTER TABLE table_product "
                     + "ADD CONSTRAINT FK_SUPPLIERS FOREIGN KEY (suppliersID) "
