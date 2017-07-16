@@ -1,6 +1,5 @@
 package servlets;
 
-import com.google.common.collect.Lists;
 import models.Supplier;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,8 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import java.io.IOException;
-import java.util.List;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import utils.DBUtils;
 import utils.UUID;
 
@@ -27,7 +27,7 @@ public class SupplierServlet extends HttpServlet {
                 Connection conn = this.ds.getConnection();
                 PreparedStatement stmt = conn.prepareStatement("SELECT * FROM " + DBUtils.SUPPLIERS);
         ) {
-            List<Supplier> suppliers = Lists.newArrayList();
+            List<Supplier> suppliers = new ArrayList<>();
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
@@ -57,7 +57,7 @@ public class SupplierServlet extends HttpServlet {
         List<Supplier> suppliers = (List<Supplier>) req.getSession().getAttribute(SESSION_ATTR);
 
         if (suppliers == null) {
-            suppliers = Lists.newArrayList();
+            suppliers = new ArrayList<>();
             req.getSession().setAttribute("suppliers", suppliers);
         }
 

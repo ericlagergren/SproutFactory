@@ -9,8 +9,8 @@ import javax.sql.DataSource;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
-import com.google.common.collect.Lists;
 import models.Product;
 import utils.Bool;
 import utils.DBUtils;
@@ -31,7 +31,7 @@ public class ProductServlet extends HttpServlet {
         ) {
             ResultSet rs = stmt.executeQuery();
 
-            List<Product> products = Lists.newArrayList();
+            List<Product> products = new ArrayList<>();
             while (rs.next()) {
                 products.add(
                         new Product(
@@ -57,7 +57,7 @@ public class ProductServlet extends HttpServlet {
         List<Product> products = (List<Product>) req.getSession().getAttribute(SESSION_ATTR);
 
         if (products == null) {
-            products = Lists.newArrayList();
+            products = new ArrayList<>();
             req.getSession().setAttribute(SESSION_ATTR, products);
         }
 

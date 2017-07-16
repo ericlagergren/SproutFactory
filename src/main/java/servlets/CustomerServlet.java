@@ -1,10 +1,8 @@
 package servlets;
 
-import com.google.common.collect.Lists;
 import models.Customer;
 import utils.DBUtils;
 import utils.UUID;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,6 +17,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "CustomerRegistration", urlPatterns = { "/CustomerRegistration", "/customerRegistration", "/customerregistration" })
@@ -36,7 +35,7 @@ public class CustomerServlet extends HttpServlet {
                 PreparedStatement stmt = conn.prepareStatement("SELECT * FROM " + DBUtils.CUSTOMERS);
                 ResultSet rs = stmt.executeQuery()
         ) {
-            List<Customer> customers = Lists.newArrayList();
+            List<Customer> customers = new ArrayList<>();
             while (rs.next()) {
                 Customer c = new Customer(
                         new UUID(rs.getBytes("id")),
@@ -62,7 +61,7 @@ public class CustomerServlet extends HttpServlet {
         List<Customer> customers = (List<Customer>) req.getSession().getAttribute(SESSION_ATTR);
 
         if (customers == null) {
-            customers = Lists.newArrayList();
+            customers = new ArrayList<>();
             req.getSession().setAttribute(SESSION_ATTR, customers);
         }
 

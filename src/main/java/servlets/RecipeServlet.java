@@ -1,6 +1,5 @@
 package servlets;
 
-import com.google.common.collect.Lists;
 import models.Recipe;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.sql.*;
 import utils.DBUtils;
@@ -27,7 +27,7 @@ public class RecipeServlet extends HttpServlet {
                 Connection conn = this.ds.getConnection();
                 PreparedStatement stmt = conn.prepareStatement("SELECT * FROM " + DBUtils.RECIPES);
         ) {
-            List<Recipe> recipes = Lists.newArrayList();
+            List<Recipe> recipes = new ArrayList<>();
 
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -48,7 +48,7 @@ public class RecipeServlet extends HttpServlet {
         List<Recipe> recipes = (List<Recipe>) req.getSession().getAttribute(SESSION_ATTR);
 
         if (recipes == null) {
-            recipes = Lists.newArrayList();
+            recipes = new ArrayList<>();
             req.getSession().setAttribute(SESSION_ATTR, recipes);
         }
 
