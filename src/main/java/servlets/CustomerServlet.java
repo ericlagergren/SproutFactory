@@ -16,13 +16,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 @WebServlet(name = "CustomerRegistration", urlPatterns = { "/CustomerRegistration", "/customerRegistration", "/customerregistration" })
 public class CustomerServlet extends HttpServlet {
     private final DataSource ds = DBUtils.dataSource();
     private static final String SESSION_ATTR = "customers";
+    private static final SimpleDateFormat fmt = new SimpleDateFormat("MM/dd/yyyy");
 
     public CustomerServlet() throws ClassNotFoundException, SQLException {
     }
@@ -40,7 +41,7 @@ public class CustomerServlet extends HttpServlet {
                         rs.getString("first"),
                         rs.getString("last"),
                         rs.getString("email"),
-                        rs.getString("dob")
+                        rs.getDate("dob")
                 );
                 customers.add(c);
             }
@@ -63,12 +64,22 @@ public class CustomerServlet extends HttpServlet {
             req.getSession().setAttribute("customers", customers);
         }
 
-        String firstName = req.getParameter("firstName");
-        String lastName = req.getParameter("lastName");
-        String email = req.getParameter("email");
-        String birthDate = req.getParameter("birthDate");
+        Date date;
+        try {
+            java.util.Date jdate = fmt.parse(req.getParameter("birthDate"));
+            date = new Date(jdate.getTime());
+        } catch (ParseException e) {
+            resp.getWriter().println(e.getMessage());
+            display(req, resp);
+            return;
+        }
 
-        Customer c = new Customer(firstName, lastName, email, birthDate);
+        Customer c = new Customer(
+                req.getParameter("firstName"),
+                req.getParameter("lastName"),
+                req.getParameter("email"),
+                date
+        );
         try (
                 Connection conn = this.ds.getConnection();
                 // id, first, last, email, dob
@@ -79,20 +90,16 @@ public class CustomerServlet extends HttpServlet {
             stmt.setString(1, c.firstName);
             stmt.setString(2, c.lastName);
             stmt.setString(3, c.email);
-
-            SimpleDateFormat fmt = new SimpleDateFormat("MM/dd/yyyy");
-            Date date = fmt.parse(c.birthDate);
-
-            stmt.setString(4, fmt.format(date));
+            stmt.setDate(4, date /* sql.Date vs util.Date */);
             stmt.execute();
 
             customers.add(c);
             req.getSession().setAttribute(SESSION_ATTR, c);
-        } catch (SQLException | ParseException e) {
+        } catch (SQLException e) {
             resp.getWriter().println(e.getMessage());
         }
 
-        System.err.println(firstName + " " + lastName + " " + email + " " + birthDate);
+        System.err.println(c.toString());
         display(req, resp);
     }
 }

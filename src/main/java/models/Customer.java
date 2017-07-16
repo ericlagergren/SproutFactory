@@ -1,19 +1,21 @@
 package models;
 
+import java.util.Date;
+
 public class Customer {
-    public int customerID;
+    public int id;
     public String firstName;
     public String lastName;
     public String email;
-    public String birthDate;
+    public Date birthDate;
 
 
-    public Customer(String firstName, String lastName, String email, String birthDate) {
+    public Customer(String firstName, String lastName, String email, Date birthDate) {
         this(0, firstName, lastName, email, birthDate);
     }
 
-    public Customer(int customerID, String firstName, String lastName, String email, String birthDate) {
-        this.customerID = customerID;
+    public Customer(int id, String firstName, String lastName, String email, Date birthDate) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -27,7 +29,7 @@ public class Customer {
 
         Customer c = (Customer) o;
 
-        if (customerID != c.customerID) return false;
+        if (id != c.id) return false;
         if (firstName != null ? !firstName.equals(c.firstName) : c.firstName != null) return false;
         if (lastName != null ? !lastName.equals(c.lastName) : c.lastName != null) return false;
         return (email != null ? email.equals(c.email) : c.email == null) && (birthDate != null ? birthDate.equals(c.birthDate) : c.birthDate == null);
@@ -35,7 +37,7 @@ public class Customer {
 
     @Override
     public int hashCode() {
-        int result = Integer.hashCode(customerID);
+        int result = Integer.hashCode(id);
         result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
@@ -46,7 +48,7 @@ public class Customer {
     @Override
     public String toString() {
         return "Customer{" +
-                "customerID='" + customerID + '\'' +
+                "id='" + id + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
