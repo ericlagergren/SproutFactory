@@ -6,8 +6,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import java.sql.SQLException;
 
-@WebServlet(name = "Server", urlPatterns = {"/startup"}, loadOnStartup = 1)
-public class Server extends HttpServlet {
+@WebServlet(name = "DBServlet", urlPatterns = {"/startup"}, loadOnStartup = 1)
+public class DBServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();

@@ -27,17 +27,18 @@ public class Customer {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Customer c = (Customer) o;
+        Customer customer = (Customer) o;
 
-        if (id != c.id) return false;
-        if (firstName != null ? !firstName.equals(c.firstName) : c.firstName != null) return false;
-        if (lastName != null ? !lastName.equals(c.lastName) : c.lastName != null) return false;
-        return (email != null ? email.equals(c.email) : c.email == null) && (birthDate != null ? birthDate.equals(c.birthDate) : c.birthDate == null);
+        if (id != customer.id) return false;
+        if (firstName != null ? !firstName.equals(customer.firstName) : customer.firstName != null) return false;
+        if (lastName != null ? !lastName.equals(customer.lastName) : customer.lastName != null) return false;
+        if (email != null ? !email.equals(customer.email) : customer.email != null) return false;
+        return birthDate != null ? birthDate.equals(customer.birthDate) : customer.birthDate == null;
     }
 
     @Override
     public int hashCode() {
-        int result = Integer.hashCode(id);
+        int result = id;
         result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
@@ -48,11 +49,11 @@ public class Customer {
     @Override
     public String toString() {
         return "Customer{" +
-                "id='" + id + '\'' +
+                "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
-                ", birthDate='" + birthDate + '\'' +
+                ", birthDate=" + birthDate +
                 '}';
     }
 }
