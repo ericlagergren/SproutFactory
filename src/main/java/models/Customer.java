@@ -1,9 +1,11 @@
 package models;
 
+import utils.UUID;
+
 import java.util.Date;
 
 public class Customer {
-    public int id;
+    public UUID id;
     public String firstName;
     public String lastName;
     public String email;
@@ -11,10 +13,10 @@ public class Customer {
 
 
     public Customer(String firstName, String lastName, String email, Date birthDate) {
-        this(0, firstName, lastName, email, birthDate);
+        this(null, firstName, lastName, email, birthDate);
     }
 
-    public Customer(int id, String firstName, String lastName, String email, Date birthDate) {
+    public Customer(UUID id, String firstName, String lastName, String email, Date birthDate) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -29,7 +31,7 @@ public class Customer {
 
         Customer customer = (Customer) o;
 
-        if (id != customer.id) return false;
+        if (id != null ? !id.equals(customer.id) : customer.id != null) return false;
         if (firstName != null ? !firstName.equals(customer.firstName) : customer.firstName != null) return false;
         if (lastName != null ? !lastName.equals(customer.lastName) : customer.lastName != null) return false;
         if (email != null ? !email.equals(customer.email) : customer.email != null) return false;
@@ -38,7 +40,7 @@ public class Customer {
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);

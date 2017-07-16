@@ -3,6 +3,8 @@ package servlets;
 import com.google.common.collect.Lists;
 import models.Customer;
 import utils.DBUtils;
+import utils.UUID;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -31,13 +33,13 @@ public class CustomerServlet extends HttpServlet {
     private void display(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         try (
                 Connection conn = this.ds.getConnection();
-                PreparedStatement stmt = conn.prepareStatement("SELECT * FROM table_customers");
+                PreparedStatement stmt = conn.prepareStatement("SELECT * FROM " + DBUtils.CUSTOMERS);
                 ResultSet rs = stmt.executeQuery()
         ) {
             List<Customer> customers = Lists.newArrayList();
             while (rs.next()) {
                 Customer c = new Customer(
-                        rs.getInt("id"),
+                        new UUID(rs.getBytes("id")),
                         rs.getString("first"),
                         rs.getString("last"),
                         rs.getString("email"),
@@ -61,7 +63,7 @@ public class CustomerServlet extends HttpServlet {
 
         if (customers == null) {
             customers = Lists.newArrayList();
-            req.getSession().setAttribute("customers", customers);
+            req.getSession().setAttribute(SESSION_ATTR, customers);
         }
 
         Date date;
@@ -84,7 +86,7 @@ public class CustomerServlet extends HttpServlet {
                 Connection conn = this.ds.getConnection();
                 // id, first, last, email, dob
                 PreparedStatement stmt = conn.prepareStatement(
-                        "INSERT INTO table_customers VALUES (DEFAULT, ?, ?, ?, ?)"
+                        "INSERT INTO " + DBUtils.CUSTOMERS + " VALUES (DEFAULT, ?, ?, ?, ?)"
                 )
         ) {
             stmt.setString(1, c.firstName);

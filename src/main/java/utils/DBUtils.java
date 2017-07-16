@@ -17,6 +17,8 @@ public class DBUtils {
         return ods;
     }
 
+    // I promise using these constants is prettier and safer than manually typing it out.
+
     public static final String CUSTOMERS = "customers";
     public static final String SUPPLIERS = "suppliers";
     public static final String PRODUCTS = "products";
@@ -29,35 +31,36 @@ public class DBUtils {
     private static final String NEWLINE = ",\n";
     private static final String RPAREN = "\n)";
     private static final String LPAREN = "(\n";
+    private static final String UUID_TYPE = "RAW (16) DEFAULT sys_guid() ";
 
     public static void buildDatabase() throws SQLException, ClassNotFoundException { buildDatabase(dataSource()); }
     public static void buildDatabase(DataSource ds) throws SQLException, ClassNotFoundException {
         exec(ds, CREATE_TABLE + CUSTOMERS + LPAREN
-                    + "id    INT "      + PRIM_KEY + NEWLINE
-                    + "first CHAR(20) " + NOT_NULL + NEWLINE
-                    + "last  CHAR(20) " + NOT_NULL + NEWLINE
-                    + "email CHAR(20) " + NOT_NULL + NEWLINE
-                    + "dob   CHAR(80) " + RPAREN
+                    + "id " + UUID_TYPE  + PRIM_KEY + NEWLINE
+                    + "first CHAR(20)  " + NOT_NULL + NEWLINE
+                    + "last  CHAR(20)  " + NOT_NULL + NEWLINE
+                    + "email CHAR(20)  " + NOT_NULL + NEWLINE
+                    + "dob   TIMESTAMP " + RPAREN
         );
         exec(ds, CREATE_TABLE + SUPPLIERS + LPAREN
                     + "firstName      CHAR(20) " + NOT_NULL + NEWLINE
                     + "lastName       CHAR(20) " + NOT_NULL + NEWLINE
-                    + "suppliersID    INT      " + PRIM_KEY + NEWLINE
+                    + "suppliersID " + UUID_TYPE + PRIM_KEY + NEWLINE
                     + "SuppliersEmail CHAR(20) " + NOT_NULL + RPAREN
         );
         exec(ds, CREATE_TABLE + PRODUCTS + LPAREN
-                    + "productName  CHAR(20)      " + NOT_NULL + NEWLINE
-                    + "productPrice DECIMAL(7, 2) " + NOT_NULL + NEWLINE
-                    + "productID    INT           " + PRIM_KEY + NEWLINE
-                    + "productIsNew CHAR(3)       " + NOT_NULL + NEWLINE
-                    + "suppliersID  INT           " + NOT_NULL + RPAREN
+                    + "id " + UUID_TYPE      + PRIM_KEY + NEWLINE
+                    + "name  CHAR(20)      " + NOT_NULL + NEWLINE
+                    + "price DECIMAL(7, 2) " + NOT_NULL + NEWLINE
+                    + "isNew CHAR(3)       " + NOT_NULL + NEWLINE
+                    + "suppliersID  RAW(16)       " + NOT_NULL + RPAREN
         );
-        exec(ds,CREATE_TABLE + EMPLOYEES + LPAREN
+        exec(ds, CREATE_TABLE + EMPLOYEES + LPAREN
                     + "firstName      CHAR(20)      " + NOT_NULL + NEWLINE
                     + "lastName       CHAR(20)      " + NOT_NULL + NEWLINE
                     + "wage           DECIMAL(7, 2) " + NOT_NULL + NEWLINE
-                    + "employeesID    INT           " + PRIM_KEY + NEWLINE
-                    + "productIsNew   CHAR(3)       " + NOT_NULL + NEWLINE
+                    + "employeesID " + UUID_TYPE      + PRIM_KEY + NEWLINE
+                    + "isNew   CHAR(1)       " + NOT_NULL + NEWLINE
                     + "employeesEmail CHAR(20)      " + NOT_NULL + RPAREN
         );
         exec(ds, CREATE_TABLE + RECIPES + LPAREN
