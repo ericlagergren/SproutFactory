@@ -9,11 +9,6 @@ import java.util.Arrays;
  * It's a rebel, just like Oracle's terrible GUID implementation.
  */
 public class UUID {
-    public static void main(String... args) throws NoSuchAlgorithmException {
-        UUID u = new UUID();
-        System.out.println(u.toString());
-    }
-
     public static final String NULL_UUID = "00000000000000000000000000000000";
 
     private byte[] data;
